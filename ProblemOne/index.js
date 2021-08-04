@@ -56,7 +56,13 @@ var arr = [
 ];
 
 function mutateArray(a) {
-    return a;
+    var flat = [...a];
+    flat = flat.map(item => {
+      item = {...item, room_no:item.guest_booking.room_no,some_total:(item.guest_booking.some_array).reduce((a,b) => a+b,0)};
+      const {guest_booking, ...rest} = item;
+      return rest;
+    });
+    return flat.filter(x => x.guest_type == 'guest').sort((a,b) => a.last_name < b.last_name ? -1 :  1);
 }
 
 $(document).ready(function() {
